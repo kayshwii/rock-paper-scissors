@@ -60,6 +60,9 @@
             humanSelection = humanSelection.toLowerCase()
             playRound(humanSelection, computerSelection)     
         }
+        humanScore === computerScore ? console.log('The game ended in a tie!') :
+        humanScore > computerScore ? console.log('You win the match!') :
+        console.log('You lost the match!')
     }
 
     let playRound = (humanChoice, computerChoice) => {
@@ -83,7 +86,7 @@
             console.log(`Computer's score is ${computerScore}`)
         }
     }
-    
+
     playGame()
     </script>
 </body>
