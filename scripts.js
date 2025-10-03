@@ -5,6 +5,33 @@
 // need to compare the choices to decide the winner
 // need to record the score
 
+
+/*
+Project part 2 - ui
+create 3 buttons, one for each selection
+add an event listener that calls playRound every time a button is clicked
+*/
+
+//get the elements
+const buttons = document.querySelectorAll('.button')
+const resultContainer = document.querySelector('#results')
+const result = document.createElement('span')
+const playerScoreContainer = document.querySelector('#playerScore')
+const computerScoreContainer = document.querySelector('#computerScore')
+
+//buton event handler
+let buttonHandler = e => {
+    let humanSelection = e.target.id
+    let computerSelection = getComputerChoice()
+    resultContainer.appendChild(result)
+    playRound(humanSelection, computerSelection)
+    
+}
+
+//add event handler to each button
+buttons.forEach(button => button.addEventListener('click', buttonHandler))
+
+
 // write a function that returns a random choice (rock, paper, or scissor)
 let getComputerChoice = () => {
     let choice = Math.floor(Math.random() * 3)
@@ -12,70 +39,53 @@ let getComputerChoice = () => {
 }
 
 // write a function to get the human choice
-let getHumanChoice = () => prompt('Rock, paper, or scissors?')
+// let getHumanChoice = () => prompt('Rock, paper, or scissors?')
 
 // record the score
 let humanScore = 0
 let computerScore = 0
 
-// let playRound = (humanChoice, computerChoice) => {
-//     humanChoice = humanChoice.toLowerCase()
-//     console.log('You: ' + humanChoice)
-//     console.log('Computer: ' + computerChoice)
-//     if ((humanChoice === 'rock' && computerChoice === 'scissors') || 
-//         (humanChoice === 'paper' && computerChoice === 'rock') ||
-//         (humanChoice === 'scissors' && computerChoice === 'paper')) {
-//         console.log ('you win!')
-//         humanScore ++
-//         console.log(`Your score is ${humanScore}`)
-//     } else if (humanChoice === computerChoice) {
-//         console.log('draw. refresh to play again')
-//     } else {
-//         computerScore++ 
-//         console.log('you lose!')
-//         console.log(`Computer's score is ${computerScore}`)
-//     }
+
+// let playGame = () => {
+//     // for (let i = 1; i <= 5; i++) {
+//     //     console.log(`Round ${i}`)
+//     //     let computerSelection = getComputerChoice()
+//     //     let humanSelection = getHumanChoice()
+//     //     humanSelection = humanSelection.toLowerCase()
+//     //     playRound(humanSelection, computerSelection)     
+//     // }
+//     humanScore === computerScore ? console.log('The game ended in a tie!') :
+//     humanScore > computerScore ? console.log('You win the match!') :
+//     console.log('You lost the match!')
 // }
 
-// const computerSelection = getComputerChoice()
-// const humanSelection = getHumanChoice()
-
-
-// playRound(humanSelection, computerSelection)
-
-let playGame = () => {
-    for (let i = 1; i <= 5; i++) {
-        console.log(`Round ${i}`)
-        let computerSelection = getComputerChoice()
-        let humanSelection = getHumanChoice()
-        humanSelection = humanSelection.toLowerCase()
-        playRound(humanSelection, computerSelection)     
-    }
-    humanScore === computerScore ? console.log('The game ended in a tie!') :
-    humanScore > computerScore ? console.log('You win the match!') :
-    console.log('You lost the match!')
-}
-
 let playRound = (humanChoice, computerChoice) => {
-    console.log(`You: ${humanChoice}`)
-    console.log(`Computer: ${computerChoice}`)
     if ((humanChoice === 'rock' && computerChoice === 'scissors') || 
         (humanChoice === 'paper' && computerChoice === 'rock') ||
         (humanChoice === 'scissors' && computerChoice === 'paper')) {
-        console.log ('you win!')
+        result.innerText = `You chose ${humanChoice}. The computer chose ${computerChoice}. You win!`
         humanScore ++
-        console.log(`Your score is ${humanScore}`)
-        console.log(`Computer's score is ${computerScore}`)
+        playerScoreContainer.innerText = humanScore
     } else if (humanChoice === computerChoice) {
-        console.log('draw')
-        console.log(`Your score is ${humanScore}`)
-        console.log(`Computer's score is ${computerScore}`)
+        result.innerText = `You chose ${humanChoice}. The computer chose ${computerChoice}. Draw!`
     } else {
+        result.innerText = `You chose ${humanChoice}. The computer chose ${computerChoice}. You lose!`
         computerScore++ 
-        console.log('you lose!')
-        console.log(`Your score is ${humanScore}`)
-        console.log(`Computer's score is ${computerScore}`)
+        computerScoreContainer.innerText = computerScore
+
+    }
+    if (humanScore === 5) {
+        result.innerText = 'You win!'
+        humanScore = 0
+        computerScore = 0
+        computerScoreContainer.innerText = computerScore
+        playerScoreContainer.innerText = humanScore
+    }
+    if (computerScore === 5) {
+        result.innerText = 'You lose!'
+        humanScore = 0
+        computerScore = 0
+        computerScoreContainer.innerText = computerScore
+        playerScoreContainer.innerText = humanScore
     }
 }
-
-playGame()
